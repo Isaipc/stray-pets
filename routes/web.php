@@ -25,6 +25,7 @@ Route::get('/dashboard', function () {
 
 Route::group(['middleware' => 'auth'], function (){
     Route::resource('pets', 'PetController');
+    Route::get('search', 'PetController@search')->name('pets.search');
 });
 
 require __DIR__.'/auth.php';

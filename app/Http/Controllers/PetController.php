@@ -13,7 +13,49 @@ class PetController extends Controller
     {
         $pets = Pet::orderBy('created_at', 'DESC')->get();
         $count_pets = $pets->count();
-        return view('pets.index', ["pets" => $pets, 'count_pets' => $count_pets]);
+        return view(
+            'pets.index',
+            [
+                "pets" => $pets,
+                "count_pets" => $count_pets,
+                "breeds" => Breed::all(),
+                "ages" => Age::all(),
+                "request" => new Pet
+            ]
+        );
+    }
+
+
+    public function search(Request $request)
+    {
+        $pets = Pet::all();
+
+        if (!is_null($request->name)) {
+            // dd($pets);
+            $pets = $pets->where('name', 'like', '%' . $request->name . '%');
+            // dd($pets);
+        }
+        if (!is_null($request->age)) {
+            $pets = $pets->where('age', $request->age);
+        }
+        if (!is_null($request->breed)) {
+            $pets = $pets->where('breed', $request->breed);
+        }
+        if (!is_null($request->sex)) {
+            $pets = $pets->where('sex', $request->sex);
+        }
+
+
+        return view(
+            'pets.index',
+            [
+                "pets" => $pets,
+                "count_pets" => $pets->count(),
+                "breeds" => Breed::all(),
+                "ages" => Age::all(),
+                "request" => $request
+            ]
+        );
     }
 
     /**
