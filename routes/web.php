@@ -23,10 +23,8 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::group(['middleware' => 'auth', 'prefix' => 'pets'], function (){
-    Route::get('index', 'PetController@index')->name('pets.index');
-    Route::get('create', 'PetController@create')->name('pets.create');
-    Route::post('store', 'PetController@store');
+Route::group(['middleware' => 'auth'], function (){
+    Route::resource('pets', 'PetController');
 });
 
 require __DIR__.'/auth.php';

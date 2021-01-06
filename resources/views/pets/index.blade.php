@@ -1,62 +1,77 @@
-{{-- @extends('dashboard') --}}
-
 <x-app-layout>
-<x-slot name="header">
-    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        {{ __('Mascotas') }}
-    </h2>
-</x-slot>
-<x-slot name="slot">
-    <div class="card">
-        <div class="card-header">
-            <a href="{{ route('pets.create') }}" class="btn btn-md btn-success">Nueva mascota</a>
-            </h2>
-        </div>
-        <div class="card-body">
-            <h4 class="card-title">Lista de mascotas</h4>
-            {{-- <p class="card-text">Text</p>  --}}
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Mascotas') }}
+        </h2>
+    </x-slot>
+    <x-slot name="slot">
+        <div class="flex flex-col space-y-4">
+            <h1 class="text-xl font-semibold">Lista de mascotas</h1>
+
+            <div>
+                <a href="{{ route('pets.create') }}"
+                    class="items-center justify-center rounded-md border bg-green-400 uppercase text-white text-xs font-semibold px-4 py-2">
+                    Agregar
+                </a>
+            </div>
 
             @if (count($pets) > 0)
-            <table class="table table-striped table-sm">
+            <table class="table-fixed border-collapse border border-green-800">
                 <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Nombre</th>
-                        <th>Fecha de registro</th>
-                        <th>Última actualización</th>
-                        <th></th>
+                        <th class="border border-green-800"></th>
+                        <th class="border border-green-800">No.</th>
+                        <th class="border border-green-800 w-1/6">Nombre</th>
+                        <th class="border border-green-800 w-1/6">Raza</th>
+                        <th class="border border-green-800 w-1/12">Edad</th>
+                        <th class="border border-green-800 w-1/12">Sexo</th>
+                        <th class="border border-green-800 w-1/6">Registro</th>
+                        <th class="border border-green-800 w-1/6">Ultima actualización</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($pets as $key=> $item)
                     <tr>
-                        <td scope="row">{{ ++$key}} </td>
-                        <td>{{ $item->nombre }} </td>
-                        <td>{{ $item->created_at}} </td>
-                        <td>{{ $item->updated_at}} </td>
-                        <td>
-                            <a href="{{ route('pets.edit', $item->id) }} " class="btn btn-sm btn-primary">Editar</a>
-                            <a href="javascript: document.getElementById('delete-{{ $item->id }}').submit()" class="btn btn-sm btn-danger">Eliminar</a>
-                            <form id="delete-{{ $item->id }}" action="{{ route('pets.destroy', $item->id) }}" method="POST">
+                        <td class="border border-green-800">
+
+                            <div class="flex space-x-4">
+                                <a href="{{ route('pets.edit', $item->id) }} "
+                                    class="flex items-center justify-center rounded-md border bg-green-400 uppercase text-white text-xs font-semibold px-4 py-2">
+                                    Editar
+                                </a>
+                                <a href="javascript: document.getElementById('delete-{{ $item->id }}').submit()"
+                                    class="flex items-center justify-center rounded-md border bg-red-400 uppercase text-white text-xs font-semibold px-4 py-2">
+                                    Eliminar
+                                </a>
+                                <form id="delete-{{ $item->id }}" action="{{ route('pets.destroy', $item->id) }}"
+                                    method="POST">
                                     @csrf
                                     @method('DELETE')
                                 </form>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                            </div>
+
+                        </td>
+                        <td class="px-2 border border-green-800">{{ ++$key}} </td>
+                        <td class="px-2 border border-green-800">{{ $item->name }} </td>
+                        <td class="px-2 border border-green-800">{{ $item->breed }} </td>
+                        <td class="px-2 border border-green-800">{{ $item->age }} </td>
+                        <td class="px-2 border border-green-800">{{ $item->sex }} </td>
+                        <td class="px-2 border border-green-800">{{ $item->created_at}} </td>
+                        <td class="px-2 border border-green-800">{{ $item->updated_at}} </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
             @else
-                <div class="alert alert-info" role="alert">Todavía no hay pets registradas.</div>
-            @endif
+            <div class="text-lg  text-yellow-500 bg-yellow-100 items-center p-5">
+                <p>
+                    Todavía no hay pets registradas.
+                </p>
             </div>
-            <div class="card-footer text-muted">
-                En esta sección puede agregar nuevas categorías.
+            @endif
         </div>
-    </div>    
-</x-slot>
-</x-dashboard>
-{{-- @section('content') --}}
 
-{{-- @endsection --}}
 
+
+    </x-slot>
+</x-app-layout>
