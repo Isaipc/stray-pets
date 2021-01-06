@@ -6,7 +6,7 @@
     </x-slot>
     <x-slot name="slot">
         <div class="flex flex-col space-y-4">
-            <h1 class="text-xl font-semibold">Lista de mascotas</h1>
+            {{-- <h1 class="text-xl font-semibold">Lista de mascotas</h1> --}}
 
             <div>
                 <a href="{{ route('pets.create') }}"
@@ -65,7 +65,7 @@
             @else
             <div class="text-lg  text-yellow-500 bg-yellow-100 items-center p-5">
                 <p>
-                    Todavía no hay pets registradas.
+                    Todavía no hay mascotas registradas.
                 </p>
             </div>
             @endif
