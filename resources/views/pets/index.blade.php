@@ -75,7 +75,7 @@
                 </form>
             </div>
 
-            @if (count($pets) > 0)
+            @if ($pets->count() > 0)
             <table class="table-fixed border-collapse border border-green-800 mt-4">
                 <thead>
                     <tr>

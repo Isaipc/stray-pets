@@ -17,7 +17,6 @@ class PetController extends Controller
             'pets.index',
             [
                 "pets" => $pets,
-                "count_pets" => $count_pets,
                 "breeds" => Breed::all(),
                 "ages" => Age::all(),
                 "request" => new Pet
@@ -32,8 +31,8 @@ class PetController extends Controller
 
         if (!is_null($request->name)) {
             // dd($pets);
-            $pets = $pets->where('name', 'like', '%' . $request->name . '%');
-            // dd($pets);
+            $name = "%" . $request->name . "%";
+            $pets = Pet::where('name', 'like', $name)->get();
         }
         if (!is_null($request->age)) {
             $pets = $pets->where('age', $request->age);
@@ -50,7 +49,6 @@ class PetController extends Controller
             'pets.index',
             [
                 "pets" => $pets,
-                "count_pets" => $pets->count(),
                 "breeds" => Breed::all(),
                 "ages" => Age::all(),
                 "request" => $request
