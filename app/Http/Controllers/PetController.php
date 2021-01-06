@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Pet;
+use App\Models\Breed;
+use App\Models\Age;
 
 class PetController extends Controller
 {
@@ -21,7 +23,7 @@ class PetController extends Controller
      */
     public function create()
     {
-        return view('pets.create');
+        return view('pets.create', ["breeds" => Breed::all(), "ages" => Age::all()]);
     }
 
     /**
@@ -35,10 +37,14 @@ class PetController extends Controller
         // $request->validate([
         //     'nombre' => 'required'
         // ]);
+        // dd($request);
         $pet = new Pet;
-        $pet->nombre = mb_strtoupper($request->pet, 'UTF-8');
+        $pet->name = $request->name;
+        $pet->age = $request->age;
+        $pet->breed = $request->breed;
+        $pet->sex = $request->sex;
         $pet->save();
-        return redirect('/pets')->with('success', 'Categoría creada correctamente.');
+        return redirect('/pets')->with('success', 'Mascota creada correctamente.');
     }
 
     /**
@@ -59,7 +65,7 @@ class PetController extends Controller
      */
     public function edit(Pet $pet)
     {
-        return view('pets.edit', compact('pet'));
+        return view('pets.edit', ["breeds" => Breed::all(), "ages" => Age::all(), "pet" => $pet]);
     }
 
     /**
@@ -71,9 +77,12 @@ class PetController extends Controller
      */
     public function update(Request $request, Pet $pet)
     {
-        $pet->nombre = mb_strtoupper($request->pet, 'UTF-8');
+        $pet->name = $request->name;
+        $pet->age = $request->age;
+        $pet->breed = $request->breed;
+        $pet->sex = $request->sex;
         $pet->save();
-        return redirect('/pets')->with('success', 'Categoría actualizada correctamente.');
+        return redirect('/pets')->with('success', 'Mascota actualizada correctamente.');
     }
 
     /**
@@ -85,6 +94,6 @@ class PetController extends Controller
     public function destroy(Pet $pet)
     {
         $pet->delete();
-        return redirect('/pets')->with('success', 'Categoría eliminada correctamente.');
+        return redirect('/pets')->with('success', 'Mascota eliminada correctamente.');
     }
 }
