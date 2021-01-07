@@ -3,11 +3,21 @@
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Mascotas') }}
         </h2>
-
     </x-slot>
+
     <x-slot name="slot">
         <div class="flex flex-col space-y-4">
             {{-- <h1 class="text-xl font-semibold">Lista de mascotas</h1> --}}
+            @if (session('success'))
+            <x-alert class="bg-green-600">
+                {{ session('success')}}
+            </x-alert>
+            @endif
+            @if (session('error'))
+            <x-alert class="bg-red-600">
+                {{ session('error')}}
+            </x-alert>
+            @endif
 
             <div>
                 <a href="{{ route('pets.create') }}"

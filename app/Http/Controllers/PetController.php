@@ -84,7 +84,7 @@ class PetController extends Controller
         $pet->breed = $request->breed;
         $pet->sex = $request->sex;
         $pet->save();
-        return redirect('/pets')->with('success', 'Mascota creada correctamente.');
+        return redirect('/pets')->with('success', 'Se ha guardado la mascota: ' . $pet->name);
     }
 
     /**
@@ -122,7 +122,7 @@ class PetController extends Controller
         $pet->breed = $request->breed;
         $pet->sex = $request->sex;
         $pet->save();
-        return redirect('/pets')->with('success', 'Mascota actualizada correctamente.');
+        return redirect('/pets')->with('success', 'Se ha actualizado la mascota: ' . $pet->name);
     }
 
     /**
@@ -133,7 +133,8 @@ class PetController extends Controller
      */
     public function destroy(Pet $pet)
     {
+        $name = $pet->name;
         $pet->delete();
-        return redirect('/pets')->with('success', 'Mascota eliminada correctamente.');
+        return redirect('/pets')->with('success', 'Se ha eliminado la mascota: ' . $name);
     }
 }
